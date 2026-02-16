@@ -1,0 +1,105 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/C:/Users/ahmed/.gradle/wrapper/dists/gradle-8.14-all/c2qonpi39x1mddn7hk5gh9iqj/gradle-8.14/lib/native-platform-0.22-milestone-28.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+
+------------------------------------------------------------
+Root project 'android'
+------------------------------------------------------------
+
+allprojects: [root project 'android', project ':android_alarm_manager_plus', project ':app', project ':app_links', project ':audio_service', project ':audio_session', project ':flutter_local_notifications', project ':flutter_overlay_window', project ':flutter_timezone', project ':just_audio', project ':path_provider_android', project ':permission_handler_android', project ':share_plus', project ':shared_preferences_android', project ':sqflite_android', project ':url_launcher_android']
+android.enableJetifier: true
+android.useAndroidX: true
+ant: org.gradle.api.internal.project.DefaultAntBuilder@357dcdf9
+antBuilderFactory: org.gradle.api.internal.project.DefaultAntBuilderFactory@2886e6bb
+artifacts: org.gradle.api.internal.artifacts.dsl.DefaultArtifactHandler_Decorated@3ecd9155
+asDynamicObject: DynamicObject for root project 'android'
+baseClassLoaderScope: org.gradle.api.internal.initialization.DefaultClassLoaderScope@4ee1d127
+buildDir: C:\D\Projects\Eman App\build
+buildFile: C:\D\Projects\Eman App\android\build.gradle.kts
+buildPath: :
+buildScriptSource: org.gradle.groovy.scripts.TextResourceScriptSource@3eb3c317
+buildTreePath: :
+buildscript: org.gradle.api.internal.initialization.DefaultScriptHandler_Decorated@657ad33d
+childProjects: {app=project ':app', flutter_timezone=project ':flutter_timezone', audio_service=project ':audio_service', flutter_local_notifications=project ':flutter_local_notifications', url_launcher_android=project ':url_launcher_android', path_provider_android=project ':path_provider_android', flutter_overlay_window=project ':flutter_overlay_window', sqflite_android=project ':sqflite_android', app_links=project ':app_links', just_audio=project ':just_audio', shared_preferences_android=project ':shared_preferences_android', permission_handler_android=project ':permission_handler_android', share_plus=project ':share_plus', android_alarm_manager_plus=project ':android_alarm_manager_plus', audio_session=project ':audio_session'}
+childProjectsUnchecked: {android_alarm_manager_plus=project ':android_alarm_manager_plus', app=project ':app', app_links=project ':app_links', audio_service=project ':audio_service', audio_session=project ':audio_session', flutter_local_notifications=project ':flutter_local_notifications', flutter_overlay_window=project ':flutter_overlay_window', flutter_timezone=project ':flutter_timezone', just_audio=project ':just_audio', path_provider_android=project ':path_provider_android', permission_handler_android=project ':permission_handler_android', share_plus=project ':share_plus', shared_preferences_android=project ':shared_preferences_android', sqflite_android=project ':sqflite_android', url_launcher_android=project ':url_launcher_android'}
+class: class org.gradle.api.internal.project.DefaultProject_Decorated
+classLoaderScope: org.gradle.api.internal.initialization.DefaultClassLoaderScope@60c25496
+components: SoftwareComponent container
+configurationActions: org.gradle.configuration.project.DefaultProjectConfigurationActionContainer@7ad64217
+configurationTargetIdentifier: org.gradle.configuration.ConfigurationTargetIdentifier$1@28c32321
+configurations: configuration container for root project 'android'
+convention: org.gradle.internal.extensibility.DefaultConvention@8c8e655
+crossProjectModelAccess: org.gradle.api.internal.project.DefaultCrossProjectModelAccess@3b183f4a
+defaultTasks: []
+deferredProjectConfiguration: org.gradle.api.internal.project.DeferredProjectConfiguration@739604c4
+dependencies: org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@42fdfbbc
+dependencyFactory: org.gradle.api.internal.artifacts.DefaultDependencyFactory@d4857f8
+dependencyLocking: org.gradle.internal.locking.DefaultDependencyLockingHandler_Decorated@7750cb74
+depth: 0
+description: null
+detachedState: false
+displayName: root project 'android'
+ext: org.gradle.internal.extensibility.DefaultExtraPropertiesExtension@3423517e
+extensions: org.gradle.internal.extensibility.DefaultConvention@8c8e655
+fileOperations: org.gradle.api.internal.file.DefaultFileOperations@192e7c5d
+fileResolver: org.gradle.api.internal.file.BaseDirFileResolver@56160f17
+gradle: build 'android'
+gradleKotlinDsl.accessorsClassPath: AccessorsClassPath(bin=[C:\Users\ahmed\.gradle\caches\8.14\kotlin-dsl\accessors\12a782048a1ff8b473c9080b748f3df6\classes], src=[C:\Users\ahmed\.gradle\caches\8.14\kotlin-dsl\accessors\12a782048a1ff8b473c9080b748f3df6\sources])
+gradleKotlinDsl.stage1AccessorsClassPath: AccessorsClassPath(bin=[C:\Users\ahmed\.gradle\caches\8.14\kotlin-dsl\accessors\9d044dca61a0cb66d9c7caad8effcb1b-PS\classes], src=[C:\Users\ahmed\.gradle\caches\8.14\kotlin-dsl\accessors\9d044dca61a0cb66d9c7caad8effcb1b-PS\sources])
+group: 
+identityPath: :
+inheritedScope: org.gradle.internal.extensibility.ExtensibleDynamicObject$InheritedDynamicObject@27ec65ca
+internalStatus: property(java.lang.Object, fixed(class java.lang.String, release))
+isolated: DefaultIsolatedProject{root project 'android'}
+kotlin.plugin.loaded.in.projects.2.2.20: :app
+layout: org.gradle.api.internal.file.DefaultProjectLayout@544e4c5
+lifecycleActionsState: null
+listenerBuildOperationDecorator: org.gradle.configuration.internal.DefaultListenerBuildOperationDecorator@41421392
+logger: org.gradle.internal.logging.slf4j.OutputEventListenerBackedLogger@1b351e6a
+logging: org.gradle.internal.logging.services.DefaultLoggingManager@197308d1
+model: root project 'android'
+modelIdentityDisplayName: null
+modelRegistry: org.gradle.model.internal.registry.DefaultModelRegistry@3b33a5f6
+name: android
+normalization: org.gradle.normalization.internal.DefaultInputNormalizationHandler_Decorated@6a3cff81
+objects: org.gradle.api.internal.model.DefaultObjectFactory@59c96ae2
+org.gradle.java.home: C:/Program Files/Android/Android Studio/jbr
+org.gradle.jvmargs: -Xmx2G -XX:MaxMetaspaceSize=1G -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+owner: root project 'android'
+parent: null
+parentIdentifier: null
+path: :
+pluginContext: false
+pluginManager: org.gradle.api.internal.plugins.DefaultPluginManager_Decorated@587dc48a
+plugins: Plugin collection
+processOperations: org.gradle.process.internal.DefaultExecActionFactory@7ec7c666
+project: root project 'android'
+projectConfigurator: org.gradle.api.internal.project.BuildOperationCrossProjectConfigurator@730aeec8
+projectDir: C:\D\Projects\Eman App\android
+projectEvaluationBroadcaster: ProjectEvaluationListener broadcast
+projectEvaluator: org.gradle.configuration.project.LifecycleProjectEvaluator@61061431
+projectIdentity: root project :
+projectPath: :
+properties: {...}
+providers: org.gradle.api.internal.provider.DefaultProviderFactory_Decorated@57e9d50f
+repositories: repository container
+resources: org.gradle.api.internal.resources.DefaultResourceHandler@17ddcd62
+rootDir: C:\D\Projects\Eman App\android
+rootProject: root project 'android'
+rootScript: false
+script: false
+scriptHandlerFactory: org.gradle.api.internal.initialization.DefaultScriptHandlerFactory@33051dff
+scriptPluginFactory: org.gradle.configuration.ScriptPluginFactorySelector@62f33032
+serviceRegistryFactory: org.gradle.internal.service.scopes.BuildScopeServiceRegistryFactory@7b2bc0ce
+services: project services
+standardOutputCapture: org.gradle.internal.logging.services.DefaultLoggingManager@197308d1
+state: project state 'EXECUTED'
+status: release
+subprojects: [project ':android_alarm_manager_plus', project ':app', project ':app_links', project ':audio_service', project ':audio_session', project ':flutter_local_notifications', project ':flutter_overlay_window', project ':flutter_timezone', project ':just_audio', project ':path_provider_android', project ':permission_handler_android', project ':share_plus', project ':shared_preferences_android', project ':sqflite_android', project ':url_launcher_android']
+taskDependencyFactory: org.gradle.api.internal.tasks.DefaultTaskDependencyFactory@264a414
+taskThatOwnsThisObject: null
+tasks: task set
+version: unspecified
+versionCatalogs: extension 'versionCatalogs'

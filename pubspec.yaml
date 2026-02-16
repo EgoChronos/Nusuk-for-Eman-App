@@ -1,0 +1,74 @@
+name: nusuk_for_iman
+description: "A spiritual, charity-based Islamic app dedicated to the soul of إيمان محمد طايع"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.6.1
+
+  # Local Storage
+  hive_flutter: ^1.1.0
+  shared_preferences: ^2.3.4
+  path_provider: ^2.1.5
+
+  # Audio
+  just_audio: ^0.9.43
+  audio_service: ^0.18.17
+
+  # Typography
+  google_fonts: ^6.2.1
+
+  # Localization
+  intl: any
+  hijri: ^3.0.0
+
+  # Networking (audio streaming)
+  http: ^1.3.0
+
+  # Future: share duaa
+  share_plus: ^12.0.1
+
+  # Icons
+  cupertino_icons: ^1.0.8
+  supabase_flutter: ^2.12.0
+  flutter_local_notifications: ^17.0.0
+  timezone: ^0.9.0
+  android_alarm_manager_plus: ^5.0.0
+  permission_handler: ^12.0.1
+  flutter_timezone: ^3.0.1
+  flutter_overlay_window: ^0.5.0
+  foreground_launcher:
+    path: ./plugins/foreground_launcher
+  package_info_plus: ^9.0.0
+  url_launcher: ^6.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
+  remove_alpha_android: true
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/data/
+    - assets/images/

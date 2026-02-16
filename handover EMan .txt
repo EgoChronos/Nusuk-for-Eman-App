@@ -1,0 +1,124 @@
+
+Nusuk for Eman — Technical Handover Document
+Project Overview
+Nusuk for Eman (نُسك لإيمان) is a premium Flutter application dedicated as Sadaqah Jariyah (ongoing charity) for the soul of Eman Mohammed Tayee. It provides spiritual tools including a Quran reader, background audio player, dhikr tracker, and a notification-driven "Floating Content" system.
+
+Brand & Identity
+App Name: Nusuk for Eman (نُسك لإيمان).
+Typography: Uses 'Aref Ruqaa' for the dedication and memorial text; 'Amiri' for Quranic text.
+English Title: Globally fixed to "Nusuk for Eman" for consistency.
+Memorial Styling: Uses RichText and calligraphic fonts to provide a premium, respectful dedication that aligns natively with the user's locale (Arabic/English).
+Architecture & Tech Stack
+Framework: Flutter (Impeller enabled).
+State Management: Riverpod (Provider-based).
+Storage: Hive (Local) + Supabase (Cloud Stats).
+Background Engine:
+Audio: audio_service + just_audio.
+Floating Overlays: flutter_overlay_window.
+Scheduling: android_alarm_manager_plus (Background Isolates).
+Notifications: flutter_local_notifications.
+Notification & Overlay System (Refined)
+The system has moved from simple notifications to a robust "True Floating" arquitecture with redundant fallbacks.
+
+1. The Floating Overlay Engine (
+NotificationService
+)
+Dual-Layer Alerting:
+Floating Window: Displays interactive religious content (Ayahs, Hadiths, etc.) over other apps.
+Standard Fallback: Inside the background task, the app fires a standard notification before attempting to draw the overlay. This ensures the user is alerted even if the OS suppresses the drawing of the floating window (e.g., Xiaomi "Pop-up" permission).
+Background Isolate (
+showOverlayCallback
+):
+Runs in a separate thread via AndroidAlarmManager.
+Handles content generation, overlay display, and data sharing with the Overlay UI.
+Includes a Self-Rescheduling mechanism that sets the next day's alarm precisely at trigger time, ensuring the schedule never breaks.
+2. Automatic Precision
+Poll-Based Permission Check: Includes a 10-second polling loop to detect permission settlement (crucial for devices that report permission status with a delay).
+Lifecycle Awareness: Uses WidgetsBindingObserver to automatically re-sync schedules and transition from "Standard" to "Floating" mode as soon as the user returns from system settings.
+3. Content Scheduling
+Frequency Slots:
+Low: 3 slots/day.
+Medium (Default): 6 slots/day (7 AM, 10 AM, 1 PM, 4 PM, 7 PM, 10 PM).
+High: 8 slots/day.
+Fixed Reminders: Morning (6 AM), Evening (5:30 PM), Sleep (10 PM), Friday Kahf (1:30 PM).
+Duaa for Eman: Now integrated into the floating system at 9:00 PM.
+Android Optimization Guidelines
+To maintain reliability across all Android distributions (MIUI, OneUI, ColorOS), the app includes a universal guidance section in Settings:
+
+Display Over Other Apps: Mandatory for the floating window.
+Battery Optimization: App must be set to "No Restrictions" or "Unrestricted" to prevent the OS from killing the background engine.
+Global Impact & Stats Sync
+Mechanism: Tapping "Mark as Read" on an overlay or notification increments local Hive counters and queues them for Supabase sync.
+Sync Logic: Automatically flushes pending increments on app startup and when connectivity returns. Uses the increment_global_stats RPC for atomic server-side updates.
+Technical Maintenance
+RPC Calls: Never update Supabase totals directly; always use the RPC to prevent race conditions.
+Manifest: Ensure OverlayService and AlarmService are declared for any new build.
+Assets: 
+quran.json
+ is the source of truth for the reader.
+Roadmap & Maintenance
+Background Reliability: The current android_alarm_manager_plus setup is robust. Monitor the "Self-Reschedule" logs if users report drifting times.
+UI Evolution: The diagnostic/testing tools have been removed for production; if debugging is needed, re-add the testDiagnostics() call in 
+NotificationService
+.
+
+
+Last implementation plan:
+Revised Implementation Plan: Duaa Action & Counter Fix
+The user reported that the "Duaa Now" button in the overlay does nothing and that "Mark as Read" fails to increment counters. This is likely due to Hive isolate isolation and the inability of the overlay to foreground the app.
+
+Proposed Changes
+Primary Strategy: Local Foreground Plugin
+[MODIFY] 
+MainApplication.kt
+Restored AlarmService.setPluginRegistrant(this) and added a safe 
+registerWith
+ placeholder.
+This is a critical fix for background isolates, ensuring that when the app is completely closed, the android_alarm_manager_plus can still initialize the Dart engine and its plugins.
+[NEW] 
+foreground_launcher plugin
+Create a local Flutter plugin to handle native context.startActivity using ApplicationContext and FLAG_ACTIVITY_NEW_TASK.
+This ensures the app-foregrounding code is registered in the Overlay isolate's separate engine, which generic plugins often fail to do.
+[MODIFY] 
+overlay_screen.dart
+Replace url_launcher and custom MethodChannels with the new 
+ForegroundLauncher
+ plugin for a clean, reliable app wake-up.
+Testing Features
+[MODIFY] 
+notification_service.dart
+Add 
+testDelayedNotification()
+ to schedule a normal notification in 20 seconds.
+Increase all test delays to 20 seconds to allow time for the user to close the app.
+[MODIFY] 
+notification_settings_screen.dart
+Add "Test Delayed Alert" button.
+Background Persistence Clarification
+The app uses android_alarm_manager_plus, which schedules system-level alarms.
+These alarms trigger even if the app is killed/closed, ensuring notifications and overlays always work.
+[MODIFY] 
+splash_screen.dart
+Immediate Navigation: Check SharedPreferences for "pending_navigation".
+If found, bypass the minimum 3-second splash duration and jump directly to 
+MainScreen
+ so it can handle the sub-navigation immediately.
+Overlay Screen
+[MODIFY] 
+overlay_screen.dart
+Replace 
+Hive
+ logic with SharedPreferences signaling.
+When "Mark as Read" or "Duaa Now" is clicked:
+Save the type (ayah, dhikr, or duaa) to "pending_mark_read" in SharedPreferences.
+If "Duaa Now", also save "/duaa" to "pending_navigation".
+Hadith content will NOT set "pending_mark_read".
+Both ID 105 (Night Reminder) and ID 106 (Morning Reminder) will be treated as duaa type.
+Notification Service
+[MODIFY] 
+notification_content_generator.dart
+Ensure both duaa_eman (ID 105) and morning_eman (ID 106) have NotificationType.duaa.
+Verification Plan
+Trigger ID 106 and 105. Verify "Duaa Now" button appears and navigates correctly to the Duaa page.
+Verify that clicking "Mark as Read" or "Duaa Now" increments the Total Duaa count after returning to the main app.
+Verify Ayah and Dhikr counters still work via the same signaling mechanism.

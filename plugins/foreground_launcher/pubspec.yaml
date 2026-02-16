@@ -1,0 +1,19 @@
+name: foreground_launcher
+description: A local plugin for foregrounding the app.
+version: 0.0.1
+homepage: https://github.com/noor/foreground_launcher
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.noor.foreground_launcher
+        pluginClass: ForegroundLauncherPlugin
