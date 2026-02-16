@@ -7,6 +7,7 @@ import '../data/sources/audio_download_service.dart';
 import '../data/sources/audio_player_service.dart';
 import '../data/sources/supabase_service.dart';
 import 'services/notification_service.dart';
+import 'services/version_service.dart';
 
 // Storage
 final hiveStorageProvider = Provider<HiveStorage>((ref) {
@@ -72,4 +73,10 @@ final rewardRepositoryProvider = Provider<RewardRepository>((ref) {
 // Notifications
 final notificationServiceProvider = Provider<NotificationService>((ref) {
   return NotificationService();
+});
+
+// Version Check
+final versionServiceProvider = Provider<VersionService>((ref) {
+  final supabase = ref.watch(supabaseServiceProvider);
+  return VersionService(supabase);
 });

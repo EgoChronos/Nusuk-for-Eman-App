@@ -15,6 +15,8 @@ import '../../core/services/notification_service.dart';
 import '../../data/sources/quran_local_source.dart';
 import '../../data/sources/audio_player_service.dart';
 import 'package:shared_preferences/shared_preferences.dart' as sp;
+import '../../core/services/version_service.dart';
+import '../../core/widgets/update_dialogs.dart';
 
 /// Splash screen — emotional entry point
 /// Shows her name + duaa, then navigates to home or onboarding
@@ -70,7 +72,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     if (!mounted) return;
 
-    // 3. Navigate
+    // 3. New: Version Check
+    final shouldProceed = await _handleUpdateCheck();
+    if (!shouldProceed) return; // Exit if force update blocked the flow
+
+    if (!mounted) return;
+
+    // 4. Navigate
     final storage = ref.read(hiveStorageProvider);
     final isFirst = storage.isFirstLaunch;
     
@@ -79,6 +87,39 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     } else {
       _navigateWithFade(context, MainScreen(storage: storage));
     }
+  }
+
+  /// Checks for updates and handles the result.
+  /// Returns [true] if the app should proceed to navigation.
+  Future<bool> _handleUpdateCheck() async {
+    try {
+      final versionService = ref.read(versionServiceProvider);
+      final result = await versionService.checkForUpdates();
+
+      if (result.type == UpdateType.force) {
+        if (mounted) {
+          await UpdateDialogs.showForceUpdateDialog(
+            context,
+            latestVersion: result.latestVersion!,
+            storeUrl: result.storeUrl!,
+          );
+        }
+        return false; // Stop navigation
+      } else if (result.type == UpdateType.optional) {
+        if (mounted) {
+          await UpdateDialogs.showOptionalUpdateDialog(
+            context,
+            latestVersion: result.latestVersion!,
+            storeUrl: result.storeUrl!,
+            onDismiss: () {},
+          );
+        }
+        return true; // Proceed regardless of optional update
+      }
+    } catch (e) {
+      debugPrint('Error in _handleUpdateCheck splash: $e');
+    }
+    return true; // Fail open
   }
 
   Future<void> _initServices() async {
