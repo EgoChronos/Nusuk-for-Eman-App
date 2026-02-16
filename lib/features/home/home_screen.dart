@@ -9,6 +9,7 @@ import '../../data/sources/hive_storage.dart';
 import '../../core/providers.dart'; // Ensure providers are imported for supabaseServiceProvider
 import '../../data/sources/supabase_service.dart';
 import 'package:nusuk_for_iman/l10n/app_localizations.dart';
+import 'widgets/permission_banner.dart';
 
 /// Home screen — the heart of the app
 class HomeScreen extends ConsumerWidget {
@@ -53,6 +54,7 @@ class HomeScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const PermissionBanner(),
               const SizedBox(height: 20),
 
               // ── Dedication Header ──

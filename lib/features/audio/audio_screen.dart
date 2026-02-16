@@ -31,7 +31,6 @@ class _AudioScreenState extends ConsumerState<AudioScreen> {
 
   final List<_Reciter> _reciters = const [
     _Reciter(id: 'alafasy', name: 'مشاري راشد العفاسي', nameEn: 'Mishary Rashid Alafasy', serverUrl: 'https://server8.mp3quran.net/afs/'),
-    _Reciter(id: 'sudais', name: 'عبد الرحمن السديس', nameEn: 'Abdul Rahman Al-Sudais', serverUrl: 'https://server11.mp3quran.net/sds/'),
     _Reciter(id: 'maher', name: 'ماهر المعيقلي', nameEn: 'Maher Al-Muaiqly', serverUrl: 'https://server12.mp3quran.net/maher/'),
     _Reciter(id: 'minshawi', name: 'محمد صديق المنشاوي', nameEn: 'Mohamed Siddiq El-Minshawi', serverUrl: 'https://server10.mp3quran.net/minsh/'),
     _Reciter(id: 'shuraym', name: 'سعود الشريم', nameEn: 'Saud Al-Shuraym', serverUrl: 'https://server7.mp3quran.net/shur/'),

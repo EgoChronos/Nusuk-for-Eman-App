@@ -87,5 +87,22 @@
   "removeBookmark": "Remove Bookmark",
   "readUntilHere": "Read until here",
   "markPreviousAsRead": "Mark all previous ayahs as read",
-  "surahMarkedRead": "Surah marked as fully read"
+  "surahMarkedRead": "Surah marked as fully read",
+  "permissionSetupTitle": "Run Settings",
+  "permissionSetupDesc": "To ensure reminders and content arrive on time, please enable the following permissions:",
+  "overlayPermissionTitle": "Display over other apps",
+  "overlayPermissionDesc": "Allows the floating window to appear on screen.",
+  "batteryPermissionTitle": "Ignore battery restrictions",
+  "batteryPermissionDesc": "To allow the app to run in the background for reliable notifications",
+  "appearancePermissionTitle": "Notification appearance",
+  "appearancePermissionDesc": "Enable \"Background pop-ups\" and \"Show on lock screen\" for best performance.",
+  "allPermissionsGranted": "Great! All permissions are now granted",
+  "permissionBannerAlert": "Alert: Setup incomplete ({count}/3) ←",
+  "@permissionBannerAlert": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "runSettings": "Run Settings",
+  "runSettingsDesc": "To ensure notifications arrive on time"
 }

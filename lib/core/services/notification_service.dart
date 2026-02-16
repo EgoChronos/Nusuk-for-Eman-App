@@ -137,6 +137,16 @@ class NotificationService {
   Future<void> _performScheduling() async {
     debugPrint('NotificationService: Running scheduling logic...');
     try {
+      // 1. Check Exact Alarm Permission (Required for Android 13+)
+      if (Platform.isAndroid) {
+        final exactAlarmStatus = await Permission.scheduleExactAlarm.status;
+        debugPrint('Permission: Schedule Exact Alarm Status: $exactAlarmStatus');
+        if (exactAlarmStatus.isDenied) {
+          debugPrint('Requesting Schedule Exact Alarm Permission...');
+          await Permission.scheduleExactAlarm.request();
+        }
+      }
+
       final currentOverlayStatus = await isOverlayPermissionGranted();
       if (currentOverlayStatus != _hasOverlayPermissionForSession) {
         _hasOverlayPermissionForSession = currentOverlayStatus;
@@ -296,8 +306,8 @@ class NotificationService {
     if (settings['sleep'] == true) {
       await _scheduleDaily(
         id: 103,
-        hour: 22, // 22:00
-        minute: 00,
+        hour: 21, //22:00
+        minute: 47,
         content: NotificationContentGenerator.getReminder('sleep'),
         channelId: 'noor_reminders',
       );
@@ -362,12 +372,11 @@ class NotificationService {
       } else {
         // Medium - Production Schedule
         slots = [
-          [07, 00],  // 7:00 AM
-          [10, 00],  // 10:00 AM
-          [13, 00],  // 1:00 PM
-          [16, 00],  // 4:00 PM
-          [19, 00],  // 7:00 PM
-          [22, 00],  // 10:00 PM
+          [07, 00], // 7:00 AM
+          [10, 00], // 10:00 AM
+          [13, 00], // 1:00 PM
+          [16, 00], // 4:00 PM
+          [21, 48], // 7:00 PM
         ];
       }
 
@@ -390,6 +399,7 @@ class NotificationService {
 
   /// Returns the next scheduled time for a content reminder
   Future<DateTime?> getNextScheduledTime() async {
+    if (!_isInitialized) return null;
     final settings = _storage!.getNotificationSettings();
     if (settings['enabled'] == false) return null;
     
@@ -403,20 +413,57 @@ class NotificationService {
         [16, 0], [17, 30], [19, 0], [20, 30], [22, 0], [23, 30]
       ];
     } else {
-      // Medium - Production Schedule
-      slots = [
-        [7, 0], [10, 0], [13, 0], [16, 0], [19, 0], [22, 0]
-      ];
+      // Medium
+      slots = [[7, 0], [10, 0], [13, 0], [16, 0], [19, 0]];
     }
 
-    DateTime? earliest;
+    tz.TZDateTime? earliest;
+    
     for (final slot in slots) {
       final time = _nextInstanceOfTime(slot[0], slot[1]);
       if (earliest == null || time.isBefore(earliest)) {
         earliest = time;
       }
     }
+    
+    // Also consider fixed reminders for the "Next" display
+    final fixedHours = [6, 17, 19, 21, 8]; 
+    for (final h in fixedHours) {
+        final time = _nextInstanceOfTime(h, (h == 17 ? 30 : 0));
+        if (earliest == null || time.isBefore(earliest)) {
+            earliest = time;
+        }
+    }
+
     return earliest;
+  }
+
+  /// Logs all scheduled slots for debugging
+  Future<void> auditSchedule() async {
+    if (!_isInitialized) return;
+    debugPrint('--- NOTIFICATION SCHEDULE AUDIT ---');
+    final settings = _storage!.getNotificationSettings();
+    final now = tz.TZDateTime.now(tz.local);
+    debugPrint('Current Time: $now');
+    debugPrint('Settings: $settings');
+    
+    if (Platform.isAndroid) {
+      final exactStatus = await Permission.scheduleExactAlarm.status;
+      debugPrint('Permission: Schedule Exact Alarm: $exactStatus');
+      
+      // Attempt to check for Xiaomi (informational)
+      try {
+         // Generic check for battery optimization
+         final isOptimized = await Permission.ignoreBatteryOptimizations.isGranted;
+         debugPrint('Permission: Ignore Battery Optimizations: $isOptimized');
+      } catch (_) {}
+    }
+    
+    debugPrint('Overlay Permission: ${await isOverlayPermissionGranted()}');
+    
+    // We already log in reScheduleAll, but this is for manual verification
+    await reScheduleAll();
+    debugPrint('--- AUDIT COMPLETE ---');
   }
 
   /// Schedule a daily repeated notification
@@ -428,7 +475,7 @@ class NotificationService {
     required String channelId,
   }) async {
     final scheduledTime = _nextInstanceOfTime(hour, minute);
-    debugPrint('Scheduling notification id=$id at $scheduledTime (channel: $channelId, title: ${content.titleAr})');
+    debugPrint('Scheduling notification id=$id at $scheduledTime (Local: ${scheduledTime.toLocal()}) (channel: $channelId, title: ${content.titleAr})');
     await _notifications.zonedSchedule(
       id,
       content.titleAr, // Uses Arabic title by default, can be localized later
@@ -438,8 +485,11 @@ class NotificationService {
         android: AndroidNotificationDetails(
           channelId,
           channelId == 'noor_reminders' ? 'Reminders' : 'Daily Content',
-          importance: Importance.high,
+          importance: Importance.max,
           priority: Priority.high,
+          visibility: NotificationVisibility.public,
+          category: AndroidNotificationCategory.reminder,
+          fullScreenIntent: true, // Crucial for waking lock screen on some devices
         ),
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
@@ -700,24 +750,25 @@ void showOverlayCallback(int id) async {
     'payload': content.payload,
   };
 
-  // 3b. Fallback Notification (in case the overlay window is blocked or hidden)
-  // We show this after a short delay to allow overlay to attempt display first
-  Future.delayed(const Duration(milliseconds: 500)).then((_) async {
+  // 3b. Fallback Notification (Ensure it shows on tray)
+  Future.delayed(const Duration(milliseconds: 200)).then((_) async {
     await fln.show(
       baseId,
       content.titleAr,
-      '${content.bodyAr.substring(0, content.bodyAr.length > 50 ? 50 : content.bodyAr.length)}...',
+      'إضغط لفتح المحتوى الإيماني 🕊️',
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'noor_content',
           'محتوى إيماني',
-          importance: Importance.high,
+          importance: Importance.max,
           priority: Priority.high,
-          // fullScreenIntent removed as it can suppress overlays on some devices
+          visibility: NotificationVisibility.public,
+          category: AndroidNotificationCategory.reminder,
+          // Removed fullScreenIntent here to avoid conflict with overlay
         ),
       ),
     );
-    debugPrint('Fallback notification shown in background isolate');
+    debugPrint('Fallback notification shown in tray (baseId=$baseId)');
   });
   
   // 4. Show Overlay

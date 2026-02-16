@@ -17,6 +17,7 @@ import 'features/hadith/hadith_screen.dart';
 import 'features/duaa/duaa_screen.dart';
 import 'features/settings/settings_screen.dart';
 import 'core/providers.dart';
+import 'core/services/permission_service.dart';
 
 /// The root widget of the application
 class NusukApp extends ConsumerWidget {
@@ -111,6 +112,7 @@ class _MainScreenState extends ConsumerState<MainScreen> with WidgetsBindingObse
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _checkPendingSignals();
+      ref.read(permissionStateProvider.notifier).refresh(silent: true);
     }
   }
 

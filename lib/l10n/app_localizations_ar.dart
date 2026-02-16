@@ -233,4 +233,46 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get surahMarkedRead => 'تم تحديد السورة كمقروءة بالكامل';
+
+  @override
+  String get permissionSetupTitle => 'إعدادات التشغيل';
+
+  @override
+  String get permissionSetupDesc =>
+      'لضمان وصول الأذكار والمحتوى الإيماني في وقتها، يرجى تفعيل الصلاحيات التالية:';
+
+  @override
+  String get overlayPermissionTitle => 'الظهور فوق التطبيقات';
+
+  @override
+  String get overlayPermissionDesc =>
+      'يسمح بظهور النافذة العائمة للأذكار على الشاشة.';
+
+  @override
+  String get batteryPermissionTitle => 'تجاهل قيود البطارية';
+
+  @override
+  String get batteryPermissionDesc =>
+      'للسماح بتشغيل التطبيق في الخلفية لضمان الإشعارات';
+
+  @override
+  String get appearancePermissionTitle => 'صلاحيات ظهور التنبيهات';
+
+  @override
+  String get appearancePermissionDesc =>
+      'تفعيل \"عرض النوافذ المنبثقة\" و\"العرض على قفل الشاشة\" لضمان عمل التطبيق بكفاءة.';
+
+  @override
+  String get allPermissionsGranted => 'رائع! جميع الصلاحيات مفعلة الآن';
+
+  @override
+  String permissionBannerAlert(int count) {
+    return 'تنبيه: الإعداد غير مكتمل ($count/3) ←';
+  }
+
+  @override
+  String get runSettings => 'إعدادات التشغيل';
+
+  @override
+  String get runSettingsDesc => 'لضمان وصول الإشعارات في الموعد المحدد';
 }

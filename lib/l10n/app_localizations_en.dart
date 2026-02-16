@@ -235,4 +235,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get surahMarkedRead => 'Surah marked as fully read';
+
+  @override
+  String get permissionSetupTitle => 'Run Settings';
+
+  @override
+  String get permissionSetupDesc =>
+      'To ensure reminders and content arrive on time, please enable the following permissions:';
+
+  @override
+  String get overlayPermissionTitle => 'Display over other apps';
+
+  @override
+  String get overlayPermissionDesc =>
+      'Allows the floating window to appear on screen.';
+
+  @override
+  String get batteryPermissionTitle => 'Ignore battery restrictions';
+
+  @override
+  String get batteryPermissionDesc =>
+      'To allow the app to run in the background for reliable notifications';
+
+  @override
+  String get appearancePermissionTitle => 'Notification appearance';
+
+  @override
+  String get appearancePermissionDesc =>
+      'Enable \"Background pop-ups\" and \"Show on lock screen\" for best performance.';
+
+  @override
+  String get allPermissionsGranted => 'Great! All permissions are now granted';
+
+  @override
+  String permissionBannerAlert(int count) {
+    return 'Alert: Setup incomplete ($count/3) ←';
+  }
+
+  @override
+  String get runSettings => 'Run Settings';
+
+  @override
+  String get runSettingsDesc => 'To ensure notifications arrive on time';
 }

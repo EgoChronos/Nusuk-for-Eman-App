@@ -87,5 +87,22 @@
   "removeBookmark": "إزالة الحفظ",
   "readUntilHere": "قرأت حتى هنا",
   "markPreviousAsRead": "تحديد كل الآيات السابقة كمقروءة",
-  "surahMarkedRead": "تم تحديد السورة كمقروءة بالكامل"
+  "surahMarkedRead": "تم تحديد السورة كمقروءة بالكامل",
+  "permissionSetupTitle": "إعدادات التشغيل",
+  "permissionSetupDesc": "لضمان وصول الأذكار والمحتوى الإيماني في وقتها، يرجى تفعيل الصلاحيات التالية:",
+  "overlayPermissionTitle": "الظهور فوق التطبيقات",
+  "overlayPermissionDesc": "يسمح بظهور النافذة العائمة للأذكار على الشاشة.",
+  "batteryPermissionTitle": "تجاهل قيود البطارية",
+  "batteryPermissionDesc": "للسماح بتشغيل التطبيق في الخلفية لضمان الإشعارات",
+  "appearancePermissionTitle": "صلاحيات ظهور التنبيهات",
+  "appearancePermissionDesc": "تفعيل \"عرض النوافذ المنبثقة\" و\"العرض على قفل الشاشة\" لضمان عمل التطبيق بكفاءة.",
+  "allPermissionsGranted": "رائع! جميع الصلاحيات مفعلة الآن",
+  "permissionBannerAlert": "تنبيه: الإعداد غير مكتمل ({count}/3) ←",
+  "@permissionBannerAlert": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "runSettings": "إعدادات التشغيل",
+  "runSettingsDesc": "لضمان وصول الإشعارات في الموعد المحدد"
 }

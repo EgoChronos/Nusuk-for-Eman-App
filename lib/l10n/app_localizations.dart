@@ -535,6 +535,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Surah marked as fully read'**
   String get surahMarkedRead;
+
+  /// No description provided for @permissionSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Run Settings'**
+  String get permissionSetupTitle;
+
+  /// No description provided for @permissionSetupDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'To ensure reminders and content arrive on time, please enable the following permissions:'**
+  String get permissionSetupDesc;
+
+  /// No description provided for @overlayPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Display over other apps'**
+  String get overlayPermissionTitle;
+
+  /// No description provided for @overlayPermissionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Allows the floating window to appear on screen.'**
+  String get overlayPermissionDesc;
+
+  /// No description provided for @batteryPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignore battery restrictions'**
+  String get batteryPermissionTitle;
+
+  /// No description provided for @batteryPermissionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'To allow the app to run in the background for reliable notifications'**
+  String get batteryPermissionDesc;
+
+  /// No description provided for @appearancePermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification appearance'**
+  String get appearancePermissionTitle;
+
+  /// No description provided for @appearancePermissionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable \"Background pop-ups\" and \"Show on lock screen\" for best performance.'**
+  String get appearancePermissionDesc;
+
+  /// No description provided for @allPermissionsGranted.
+  ///
+  /// In en, this message translates to:
+  /// **'Great! All permissions are now granted'**
+  String get allPermissionsGranted;
+
+  /// No description provided for @permissionBannerAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert: Setup incomplete ({count}/3) ←'**
+  String permissionBannerAlert(int count);
+
+  /// No description provided for @runSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Run Settings'**
+  String get runSettings;
+
+  /// No description provided for @runSettingsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'To ensure notifications arrive on time'**
+  String get runSettingsDesc;
 }
 
 class _AppLocalizationsDelegate
