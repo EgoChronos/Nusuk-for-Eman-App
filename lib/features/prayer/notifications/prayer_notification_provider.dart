@@ -104,7 +104,7 @@ class PrayerNotificationProvider implements NotificationScheduleProvider {
            bodyEn: 'Hasten to prayer, hasten to success',
          ),
          scheduledTime: tzTime,
-         channelId: ChannelManager.channelPrayerId,
+         channelId: ChannelManager.getPrayerChannelId(sound),
          matchDateTimeComponents: null, // One-shot
          sound: sound == 'default' ? null : sound,
        );

@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import '../../../../data/models/notification_content.dart';
@@ -22,8 +23,9 @@ class NotificationDisplay {
       importance: Importance.max,
       priority: Priority.high,
       visibility: NotificationVisibility.public,
-      category: AndroidNotificationCategory.reminder,
+      category: AndroidNotificationCategory.alarm,
       fullScreenIntent: true,
+      vibrationPattern: Int64List.fromList([0, 1000, 500, 1000]),
       sound: sound != null ? RawResourceAndroidNotificationSound(sound) : null,
       playSound: true,
     );
@@ -75,8 +77,9 @@ class NotificationDisplay {
       importance: Importance.max,
       priority: Priority.high,
       visibility: NotificationVisibility.public,
-      category: AndroidNotificationCategory.reminder,
+      category: AndroidNotificationCategory.alarm,
       fullScreenIntent: true,
+      vibrationPattern: Int64List.fromList([0, 1000, 500, 1000]),
       sound: sound != null ? RawResourceAndroidNotificationSound(sound) : null,
       playSound: true,
     );

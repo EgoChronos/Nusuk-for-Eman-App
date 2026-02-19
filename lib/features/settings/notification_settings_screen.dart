@@ -271,6 +271,19 @@ class _NotificationSettingsScreenState extends ConsumerState<NotificationSetting
                     },
                   ),
                   ListTile(
+                    leading: const Icon(Icons.mosque_outlined, color: AppColors.accent),
+                    title: const Text('Test Athan Notification'),
+                    subtitle: const Text('Schedules prayer alert in 10s with current sound'),
+                    onTap: () async {
+                      await NotificationService().testAthanNotification();
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Athan scheduled! Close the app and wait 10s.')),
+                        );
+                      }
+                    },
+                  ),
+                  ListTile(
                     leading: const Icon(Icons.timer_outlined, color: Colors.blueGrey),
                     title: const Text('Test Delayed Notification'),
                     subtitle: const Text('Sends a standard notification in 20s (Close App now)'),

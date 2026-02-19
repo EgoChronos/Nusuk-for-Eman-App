@@ -76,7 +76,10 @@ class NotificationService {
     );
 
     // 4. Create Channels
-    await _channelManager.createChannels(_flutterLocalNotificationsPlugin);
+    await _channelManager.createChannels(
+      _flutterLocalNotificationsPlugin,
+      athanSound: _storage?.getAthanSound(),
+    );
 
     // 5. Register Providers
     _registry.register(FixedScheduleProvider(_display));
@@ -131,11 +134,17 @@ class NotificationService {
   Future<void> reScheduleAll() async {
     if (!_isInitialized) return;
     debugPrint('NotificationService: Rescheduling all...');
-    
-    // Check Android permissions first
+
+    // 1. Refresh Channels (ensures sound is up to date)
+    await _channelManager.createChannels(
+      _flutterLocalNotificationsPlugin,
+      athanSound: _storage?.getAthanSound(),
+    );
+
+    // 2. Check Android permissions
     await _permissionManager.requestAndroidPermissions();
     
-    // Run Registry
+    // 3. Run Registry
     await _registry.rescheduleAll();
   }
 
@@ -171,6 +180,10 @@ class NotificationService {
   Future<void> testNotification() async => debugTools.testNotification();
   Future<void> testFloatingOverlay() async => debugTools.testFloatingOverlay();
   Future<void> testDelayedNotification() async => debugTools.testDelayedNotification();
+  Future<void> testAthanNotification() async {
+    final sound = _storage?.getAthanSound();
+    await debugTools.testAthanNotification(sound);
+  }
 
   // ---------------------------------------------------------------------------
   // Event Handlers

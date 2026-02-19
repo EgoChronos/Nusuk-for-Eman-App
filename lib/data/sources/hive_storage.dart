@@ -403,7 +403,7 @@ class HiveStorage {
 
   // --- Prayer Notification Settings ---
   String getAthanSound() => 
-      settingsBox.get('prayerAthanSound', defaultValue: 'default');
+      settingsBox.get('prayerAthanSound', defaultValue: 'athan_aqsa');
 
   Future<void> setAthanSound(String sound) => 
       settingsBox.put('prayerAthanSound', sound);

@@ -91,6 +91,33 @@ class NotificationDebugTools {
     );
     debugPrint('SUCCESS: Scheduled TEST delayed alert in 20 seconds at $testTime');
   }
+
+  /// TEST: Trigger a prayer notification in 10 seconds with custom sound
+  Future<void> testAthanNotification(String? sound) async {
+    debugPrint('NotificationDebugTools: Triggering TEST Athan in 10 seconds...');
+    
+    final now = tz.TZDateTime.now(tz.local);
+    final testTime = now.add(const Duration(seconds: 10));
+    
+    final content = NotificationContent(
+      id: '996',
+      type: NotificationType.reminder,
+      titleAr: 'اختبار الأذان 🕌',
+      bodyAr: 'حي على الصلاة.. حي على الفلاح',
+      titleEn: 'Athan Test 🕌',
+      bodyEn: 'Hasten to prayer, hasten to success',
+    );
+
+    await _display.schedule(
+      id: 996,
+      content: content,
+      scheduledTime: testTime,
+      channelId: ChannelManager.getPrayerChannelId(sound),
+      matchDateTimeComponents: null,
+      sound: sound == 'default' ? null : sound,
+    );
+    debugPrint('SUCCESS: Scheduled TEST Athan in 10 seconds with sound: $sound');
+  }
   /// TEST: Audit all pending schedules
   Future<void> auditSchedule() async {
     debugPrint('\n--- NOTIFICATION AUDIT START ---');
