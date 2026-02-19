@@ -173,7 +173,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get khatmaResetNote =>
-      'Reading progress resets at the start of each Hijri month';
+      'Reading progress is saved and only resets manually for a new Khatma';
 
   @override
   String get searchQuranHint => 'Search for Surah or Ayah...';
@@ -277,4 +277,99 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get runSettingsDesc => 'To ensure notifications arrive on time';
+
+  @override
+  String get troubleshoot => 'Troubleshoot & Test';
+
+  @override
+  String get prayerFajr => 'Fajr';
+
+  @override
+  String get prayerSunrise => 'Sunrise';
+
+  @override
+  String get prayerDhuhr => 'Dhuhr';
+
+  @override
+  String get prayerAsr => 'Asr';
+
+  @override
+  String get prayerMaghrib => 'Maghrib';
+
+  @override
+  String get prayerIsha => 'Isha';
+
+  @override
+  String nextPrayerLabel(String name) {
+    return 'Next: $name';
+  }
+
+  @override
+  String get prayerTimesSettings => 'Prayer Times Settings';
+
+  @override
+  String get calculationMethods => 'Calculation Method & Madhab';
+
+  @override
+  String get locationError => 'Location permission denied or service disabled';
+
+  @override
+  String get locationUnknown => 'Location Unknown';
+
+  @override
+  String get methodMWL => 'Muslim World League';
+
+  @override
+  String get methodEgyptian => 'Egyptian General Authority';
+
+  @override
+  String get methodUmmAlQura => 'Umm al-Qura (Makkah)';
+
+  @override
+  String get madhabShafi => 'Shafi, Maliki, Hanbali';
+
+  @override
+  String get madhabHanafi => 'Hanafi';
+
+  @override
+  String get selectMethod => 'Select Calculation Method';
+
+  @override
+  String get selectMadhab => 'Select Madhab';
+
+  @override
+  String get athanSound => 'Athan Sound';
+
+  @override
+  String get selectAthan => 'Select Athan Sound';
+
+  @override
+  String get prePrayerAlert => 'Pre-Prayer Alert';
+
+  @override
+  String get selectReminder => 'Select Reminder Time';
+
+  @override
+  String get minutes => 'minutes';
+
+  @override
+  String get sunriseAlert => 'Sunrise Alert';
+
+  @override
+  String get enabled => 'Enabled';
+
+  @override
+  String get disabled => 'Disabled';
+
+  @override
+  String get off => 'Off';
+
+  @override
+  String get calculationMethodsHeader => 'CALCULATION SETTINGS';
+
+  @override
+  String get notificationsHeader => 'NOTIFICATION SETTINGS';
+
+  @override
+  String get prayerSchedule => 'PRAYER SCHEDULE';
 }

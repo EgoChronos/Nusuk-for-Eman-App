@@ -7,6 +7,8 @@ import '../../core/constants/app_strings.dart';
 import '../../data/sources/hive_storage.dart';
 import 'notification_settings_screen.dart';
 import 'package:nusuk_for_iman/l10n/app_localizations.dart';
+import '../../core/intention/intention_provider.dart';
+import '../onboarding/intention_choice_screen.dart';
 
 /// Settings screen — font, theme, language, intention, privacy
 class SettingsScreen extends ConsumerStatefulWidget {
@@ -127,6 +129,49 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => NotificationSettingsScreen(storage: widget.storage),
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // Prayer Times
+          _SectionHeader(title: l10n.prayerTimesSettings, subtitle: 'Salah'),
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.access_time, color: AppColors.primary),
+              title: Text(l10n.prayerTimesSettings, style: const TextStyle(fontFamily: 'Amiri', fontSize: 16)),
+              subtitle: Text(l10n.calculationMethods),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: AppColors.textSubtle),
+              onTap: () => Navigator.of(context).pushNamed('/prayer_times'),
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // App Dedication
+          _SectionHeader(title: language == 'ar' ? 'تخصيص التطبيق' : 'App Dedication', subtitle: 'Dedication'),
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.volunteer_activism_outlined, color: AppColors.primary),
+              title: Text(
+                language == 'ar' ? 'تغيير نية العمل' : 'Change App Dedication',
+                style: const TextStyle(fontFamily: 'Amiri', fontSize: 16),
+              ),
+              subtitle: Text(
+                // Watch intentionProvider to trigger rebuild when it changes
+                () {
+                  ref.watch(intentionProvider);
+                  return ref.read(intentionProvider.notifier).getDedicationText(arabic: language == 'ar');
+                }(),
+                style: const TextStyle(fontSize: 13),
+              ),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: AppColors.textSubtle),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const IntentionChoiceScreen(),
                   ),
                 );
               },

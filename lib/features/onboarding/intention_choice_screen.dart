@@ -13,21 +13,34 @@ class IntentionChoiceScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = ref.watch(intentionProvider);
+    final isFirstLaunch = !ref.watch(intentionProvider.notifier).hasConfirmedIntention;
 
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: isFirstLaunch 
+        ? null 
+        : AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.nightlight_round,
-                size: 48,
-                color: AppColors.accent,
-              ),
-              const SizedBox(height: 24),
+              if (isFirstLaunch) ...[
+                Icon(
+                  Icons.nightlight_round,
+                  size: 48,
+                  color: AppColors.accent,
+                ),
+                const SizedBox(height: 24),
+              ],
               Text(
                 'بسم الله الرحمن الرحيم',
                 textDirection: TextDirection.rtl,
@@ -77,9 +90,16 @@ class IntentionChoiceScreen extends ConsumerWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Save the intention and continue
-                    Navigator.of(context).pushReplacementNamed('/main');
+                  onPressed: () async {
+                    // Save the confirmation and continue
+                    await ref.read(intentionProvider.notifier).confirmIntention();
+                    
+                    if (!context.mounted) return;
+                    if (isFirstLaunch) {
+                      Navigator.of(context).pushReplacementNamed('/main');
+                    } else {
+                      Navigator.of(context).pop();
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
@@ -88,9 +108,9 @@ class IntentionChoiceScreen extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
-                    'Continue · متابعة',
-                    style: TextStyle(
+                  child: Text(
+                    isFirstLaunch ? 'Continue · متابعة' : 'Save · حفظ',
+                    style: const TextStyle(
                       fontSize: 18,
                       color: Colors.white,
                       fontWeight: FontWeight.w600,

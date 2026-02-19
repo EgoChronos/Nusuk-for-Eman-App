@@ -10,6 +10,7 @@ import '../../core/providers.dart'; // Ensure providers are imported for supabas
 import '../../data/sources/supabase_service.dart';
 import 'package:nusuk_for_iman/l10n/app_localizations.dart';
 import 'widgets/permission_banner.dart';
+import '../prayer/widgets/prayer_countdown_widget.dart';
 
 /// Home screen — the heart of the app
 class HomeScreen extends ConsumerWidget {
@@ -109,7 +110,10 @@ class HomeScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              // ── Prayer Countdown ──
+              const PrayerCountdownWidget(),
+
+              const SizedBox(height: 12),
 
               // ── Quick Actions ──
               if (lastRead != null)

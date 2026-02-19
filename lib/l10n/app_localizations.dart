@@ -419,7 +419,7 @@ abstract class AppLocalizations {
   /// No description provided for @khatmaResetNote.
   ///
   /// In en, this message translates to:
-  /// **'Reading progress resets at the start of each Hijri month'**
+  /// **'Reading progress is saved and only resets manually for a new Khatma'**
   String get khatmaResetNote;
 
   /// No description provided for @searchQuranHint.
@@ -607,6 +607,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To ensure notifications arrive on time'**
   String get runSettingsDesc;
+
+  /// No description provided for @troubleshoot.
+  ///
+  /// In en, this message translates to:
+  /// **'Troubleshoot & Test'**
+  String get troubleshoot;
+
+  /// No description provided for @prayerFajr.
+  ///
+  /// In en, this message translates to:
+  /// **'Fajr'**
+  String get prayerFajr;
+
+  /// No description provided for @prayerSunrise.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise'**
+  String get prayerSunrise;
+
+  /// No description provided for @prayerDhuhr.
+  ///
+  /// In en, this message translates to:
+  /// **'Dhuhr'**
+  String get prayerDhuhr;
+
+  /// No description provided for @prayerAsr.
+  ///
+  /// In en, this message translates to:
+  /// **'Asr'**
+  String get prayerAsr;
+
+  /// No description provided for @prayerMaghrib.
+  ///
+  /// In en, this message translates to:
+  /// **'Maghrib'**
+  String get prayerMaghrib;
+
+  /// No description provided for @prayerIsha.
+  ///
+  /// In en, this message translates to:
+  /// **'Isha'**
+  String get prayerIsha;
+
+  /// No description provided for @nextPrayerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {name}'**
+  String nextPrayerLabel(String name);
+
+  /// No description provided for @prayerTimesSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer Times Settings'**
+  String get prayerTimesSettings;
+
+  /// No description provided for @calculationMethods.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculation Method & Madhab'**
+  String get calculationMethods;
+
+  /// No description provided for @locationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission denied or service disabled'**
+  String get locationError;
+
+  /// No description provided for @locationUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Unknown'**
+  String get locationUnknown;
+
+  /// No description provided for @methodMWL.
+  ///
+  /// In en, this message translates to:
+  /// **'Muslim World League'**
+  String get methodMWL;
+
+  /// No description provided for @methodEgyptian.
+  ///
+  /// In en, this message translates to:
+  /// **'Egyptian General Authority'**
+  String get methodEgyptian;
+
+  /// No description provided for @methodUmmAlQura.
+  ///
+  /// In en, this message translates to:
+  /// **'Umm al-Qura (Makkah)'**
+  String get methodUmmAlQura;
+
+  /// No description provided for @madhabShafi.
+  ///
+  /// In en, this message translates to:
+  /// **'Shafi, Maliki, Hanbali'**
+  String get madhabShafi;
+
+  /// No description provided for @madhabHanafi.
+  ///
+  /// In en, this message translates to:
+  /// **'Hanafi'**
+  String get madhabHanafi;
+
+  /// No description provided for @selectMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Calculation Method'**
+  String get selectMethod;
+
+  /// No description provided for @selectMadhab.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Madhab'**
+  String get selectMadhab;
+
+  /// No description provided for @athanSound.
+  ///
+  /// In en, this message translates to:
+  /// **'Athan Sound'**
+  String get athanSound;
+
+  /// No description provided for @selectAthan.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Athan Sound'**
+  String get selectAthan;
+
+  /// No description provided for @prePrayerAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-Prayer Alert'**
+  String get prePrayerAlert;
+
+  /// No description provided for @selectReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Reminder Time'**
+  String get selectReminder;
+
+  /// No description provided for @minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'minutes'**
+  String get minutes;
+
+  /// No description provided for @sunriseAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise Alert'**
+  String get sunriseAlert;
+
+  /// No description provided for @enabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get enabled;
+
+  /// No description provided for @disabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get disabled;
+
+  /// No description provided for @off.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get off;
+
+  /// No description provided for @calculationMethodsHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'CALCULATION SETTINGS'**
+  String get calculationMethodsHeader;
+
+  /// No description provided for @notificationsHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTIFICATION SETTINGS'**
+  String get notificationsHeader;
+
+  /// No description provided for @prayerSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'PRAYER SCHEDULE'**
+  String get prayerSchedule;
 }
 
 class _AppLocalizationsDelegate

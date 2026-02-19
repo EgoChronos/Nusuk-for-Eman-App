@@ -33,8 +33,10 @@ class MainActivity : AudioServiceActivity() {
     }
 
     private fun checkBackgroundPopups(): Boolean {
-        // OP_BACKGROUND_START_ACTIVITY is 10021 on MIUI
-        // OP_SHOW_WHEN_LOCKED is 10020 on MIUI
+        // MIUI Specific Ops:
+        // 10021: Background Activity Start (Most critical for overlays)
+        // 10020: Show when locked (Essential for wake-up overlay)
+        // 10034: Custom view notification (Sometimes affects background wake)
         return checkAppOp(10021) && checkAppOp(10020)
     }
 

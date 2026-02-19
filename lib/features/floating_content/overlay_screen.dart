@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart' as sp;
 import 'package:nusuk_for_iman/core/theme/app_colors.dart';
 import 'package:nusuk_for_iman/data/models/notification_content.dart';
 import 'package:foreground_launcher/foreground_launcher.dart';
+import 'package:nusuk_for_iman/core/services/debug_logger.dart';
+import 'dart:convert';
 
 class OverlayScreen extends StatefulWidget {
   const OverlayScreen({super.key});
@@ -18,40 +20,54 @@ class _OverlayScreenState extends State<OverlayScreen> {
 
   @override
   void initState() {
+    DebugLogger.log('OverlayScreen: initState called. Isolate is ALIVE.');
     super.initState();
     _loadContent();
   }
 
   Future<void> _loadContent() async {
-    // In a real app, we'd pass data via args or shared pres.
-    // However, flutter_overlay_window supports passing data via 'shareData'.
-    // For MVP complex objects, we might need to rely on shared prefs 
-    // or just listen to the data passed in showOverlay(..., data: ...).
-    
-    // For now, let's listen to the data stream
+    // 1. Try to load from SharedPreferences (Robust for Xiaomi)
+    try {
+      final prefs = await sp.SharedPreferences.getInstance();
+      final String? jsonStr = prefs.getString('latest_overlay_data');
+      if (jsonStr != null) {
+        final Map<String, dynamic> data = jsonDecode(jsonStr);
+        _updateWithMap(data);
+        DebugLogger.log('OverlayScreen: Loaded persistent data from SharedPreferences');
+      } else {
+        DebugLogger.log('OverlayScreen: No persistent data found in SharedPreferences');
+      }
+    } catch (e) {
+      DebugLogger.log('OverlayScreen: SharedPrefs load failed: $e');
+    }
+
+    // 2. Also listen for real-time updates (Transient)
     FlutterOverlayWindow.overlayListener.listen((event) {
       if (event is Map) {
-         // Parse map to NotificationContent
-         // Reconstructing manually since we can't easily pass the object
-         final typeName = event['type'] as String? ?? 'reminder';
-         final type = NotificationType.values.firstWhere(
-           (e) => e.name == typeName, orElse: () => NotificationType.reminder
-         );
-         
-         setState(() {
-           _content = NotificationContent(
-             id: event['id'] ?? 'unknown',
-             type: type,
-             titleAr: event['titleAr'] ?? 'ذكر',
-             titleEn: event['titleEn'] ?? 'Dhikr',
-             bodyAr: event['bodyAr'] ?? '',
-             bodyEn: event['bodyEn'] ?? '',
-             sourceLabel: event['sourceLabel'],
-             payload: Map<String, dynamic>.from(event['payload'] ?? {}),
-           );
-           _isLoading = false;
-         });
+        _updateWithMap(event);
+        DebugLogger.log('OverlayScreen: Received real-time data from stream');
       }
+    });
+  }
+
+  void _updateWithMap(Map event) {
+    final typeName = event['type'] as String? ?? 'reminder';
+    final type = NotificationType.values.firstWhere(
+      (e) => e.name == typeName, orElse: () => NotificationType.reminder
+    );
+         
+    setState(() {
+      _content = NotificationContent(
+        id: event['id'] ?? 'unknown',
+        type: type,
+        titleAr: event['titleAr'] ?? 'ذكر',
+        titleEn: event['titleEn'] ?? 'Dhikr',
+        bodyAr: event['bodyAr'] ?? '',
+        bodyEn: event['bodyEn'] ?? '',
+        sourceLabel: event['sourceLabel'],
+        payload: Map<String, dynamic>.from(event['payload'] ?? {}),
+      );
+      _isLoading = false;
     });
   }
 
@@ -89,9 +105,21 @@ class _OverlayScreenState extends State<OverlayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // If content not loaded yet, show empty (transparent)
+    // If content not loaded yet, show a basic background so user knows it's alive
     if (_isLoading || _content == null) {
-      return const SizedBox();
+      return Material(
+        color: Colors.transparent,
+        child: Center(
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: const CircularProgressIndicator(color: Colors.white),
+          ),
+        ),
+      );
     }
     
     final isHadith = _content!.type == NotificationType.hadith;

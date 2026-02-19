@@ -11,6 +11,8 @@ class AppStrings {
   static const String dedicationFooter = '🤍 هذا العمل صدقة لروح إيمان محمد طايع';
   static const String dedicationFooterEn = '🤍 This deed is gifted to the soul of Eman Mohammed Tayee';
   static const String splashDuaa = 'اللهم اغفر لها وارحمها واجعل هذا العمل نورًا في قبرها';
+  static const String splashGeneral = 'بسم الله الرحمن الرحيم';
+  static const String splashGeneralDuaa = 'وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا';
   static const String closureMessage = '🤍 اللهم اجعل هذا نورًا في قبرها';
   static const String closureMessageEn = '🤍 May this be light for her grave';
 

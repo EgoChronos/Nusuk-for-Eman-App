@@ -171,7 +171,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get newKhatma => 'ختمة جديدة';
 
   @override
-  String get khatmaResetNote => 'يُعاد تعيين تقدم القراءة في بداية كل شهر هجري';
+  String get khatmaResetNote =>
+      'يُحفظ تقدم القراءة تلقائيًا ويمكنك البدء بختمة جديدة يدويًا';
 
   @override
   String get searchQuranHint => 'ابحث عن سورة أو آية...';
@@ -275,4 +276,99 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get runSettingsDesc => 'لضمان وصول الإشعارات في الموعد المحدد';
+
+  @override
+  String get troubleshoot => 'فحص واختبار';
+
+  @override
+  String get prayerFajr => 'الفجر';
+
+  @override
+  String get prayerSunrise => 'الشروق';
+
+  @override
+  String get prayerDhuhr => 'الظهر';
+
+  @override
+  String get prayerAsr => 'العصر';
+
+  @override
+  String get prayerMaghrib => 'المغرب';
+
+  @override
+  String get prayerIsha => 'العشاء';
+
+  @override
+  String nextPrayerLabel(String name) {
+    return 'التالي: $name';
+  }
+
+  @override
+  String get prayerTimesSettings => 'إعدادات مواقيت الصلاة';
+
+  @override
+  String get calculationMethods => 'طريقة الحساب والمذهب';
+
+  @override
+  String get locationError => 'صلاحية الموقع مرفوضة أو الخدمة معطلة';
+
+  @override
+  String get locationUnknown => 'موقع غير معروف';
+
+  @override
+  String get methodMWL => 'رابطة العالم الإسلامي';
+
+  @override
+  String get methodEgyptian => 'الهيئة المصرية العامة للمساحة';
+
+  @override
+  String get methodUmmAlQura => 'أم القرى (مكة المكرمة)';
+
+  @override
+  String get madhabShafi => 'شافعي، مالكي، حنبلي';
+
+  @override
+  String get madhabHanafi => 'حنفي';
+
+  @override
+  String get selectMethod => 'اختر طريقة الحساب';
+
+  @override
+  String get selectMadhab => 'اختر المذهب';
+
+  @override
+  String get athanSound => 'صوت الأذان';
+
+  @override
+  String get selectAthan => 'اختر صوت الأذان';
+
+  @override
+  String get prePrayerAlert => 'تنبيه قبل الصلاة';
+
+  @override
+  String get selectReminder => 'اختر مدة التنبيه';
+
+  @override
+  String get minutes => 'دقائق';
+
+  @override
+  String get sunriseAlert => 'تنبيه الشروق';
+
+  @override
+  String get enabled => 'مفعل';
+
+  @override
+  String get disabled => 'معطل';
+
+  @override
+  String get off => 'إيقاف';
+
+  @override
+  String get calculationMethodsHeader => 'إعدادات الحساب';
+
+  @override
+  String get notificationsHeader => 'إعدادات التنبيهات';
+
+  @override
+  String get prayerSchedule => 'جدول الصلوات';
 }

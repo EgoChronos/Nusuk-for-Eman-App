@@ -4,10 +4,10 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/constants/app_strings.dart';
 import '../onboarding/intention_choice_screen.dart';
-import '../../app.dart'; // For MainScreen
+import '../onboarding/dedication_display_screen.dart';
 import '../../core/providers.dart'; // For hiveStorageProvider
+import '../../core/intention/intention_provider.dart';
 
-import 'package:hijri/hijri_calendar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:audio_service/audio_service.dart';
 import '../../data/sources/supabase_service.dart';
@@ -79,13 +79,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     if (!mounted) return;
 
     // 4. Navigate
-    final storage = ref.read(hiveStorageProvider);
-    final isFirst = storage.isFirstLaunch;
+    final hasConfirmed = ref.read(intentionProvider.notifier).hasConfirmedIntention;
     
-    if (isFirst) {
+    if (!hasConfirmed) {
       _navigateWithFade(context, const IntentionChoiceScreen());
     } else {
-      _navigateWithFade(context, MainScreen(storage: storage));
+      _navigateWithFade(context, const DedicationDisplayScreen());
     }
   }
 
@@ -126,20 +125,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     final storage = ref.read(hiveStorageProvider);
 
     // [Moved from main.dart] Check for New Hijri Month
-    try {
-      final today = HijriCalendar.now();
-      final lastMonth = storage.getLastHijriMonth();
-
-      if (lastMonth == -1) {
-        await storage.setLastHijriMonth(today.hMonth);
-      } else if (lastMonth != today.hMonth) {
-        debugPrint('New Hijri Month Detected (${today.hMonth}). Resetting progress.');
-        await storage.resetReadingProgress();
-        await storage.setLastHijriMonth(today.hMonth);
-      }
-    } catch (e) {
-      debugPrint('Failed to check Hijri date: $e');
-    }
+    // REMOVED: Monthly reset is no longer desired as per user request.
 
     // [Moved from main.dart] Initialize Notification Service (Background)
     try {

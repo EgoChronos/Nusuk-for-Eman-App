@@ -1,8 +1,8 @@
 package com.noorforiman.noor_for_iman
 
-import android.app.Application
+import io.flutter.app.FlutterApplication
 
-class MainApplication : Application() {
+class MainApplication : FlutterApplication() {
     override fun onCreate() {
         super.onCreate()
     }

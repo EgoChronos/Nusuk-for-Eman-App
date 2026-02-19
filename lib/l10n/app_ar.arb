@@ -58,7 +58,7 @@
   },
   "khatmaProgress": "تقدم الختمة",
   "newKhatma": "ختمة جديدة",
-  "khatmaResetNote": "يُعاد تعيين تقدم القراءة في بداية كل شهر هجري",
+  "khatmaResetNote": "يُحفظ تقدم القراءة تلقائيًا ويمكنك البدء بختمة جديدة يدويًا",
   "searchQuranHint": "ابحث عن سورة أو آية...",
   "noBookmarksYet": "لا توجد علامات مرجعية بعد",
   "markSurahRead": "تحديد السورة كمقروءة",
@@ -104,5 +104,41 @@
     }
   },
   "runSettings": "إعدادات التشغيل",
-  "runSettingsDesc": "لضمان وصول الإشعارات في الموعد المحدد"
+  "runSettingsDesc": "لضمان وصول الإشعارات في الموعد المحدد",
+  "troubleshoot": "فحص واختبار",
+  "prayerFajr": "الفجر",
+  "prayerSunrise": "الشروق",
+  "prayerDhuhr": "الظهر",
+  "prayerAsr": "العصر",
+  "prayerMaghrib": "المغرب",
+  "prayerIsha": "العشاء",
+  "nextPrayerLabel": "التالي: {name}",
+  "@nextPrayerLabel": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "prayerTimesSettings": "إعدادات مواقيت الصلاة",
+  "calculationMethods": "طريقة الحساب والمذهب",
+  "locationError": "صلاحية الموقع مرفوضة أو الخدمة معطلة",
+  "locationUnknown": "موقع غير معروف",
+  "methodMWL": "رابطة العالم الإسلامي",
+  "methodEgyptian": "الهيئة المصرية العامة للمساحة",
+  "methodUmmAlQura": "أم القرى (مكة المكرمة)",
+  "madhabShafi": "شافعي، مالكي، حنبلي",
+  "madhabHanafi": "حنفي",
+  "selectMethod": "اختر طريقة الحساب",
+  "selectMadhab": "اختر المذهب",
+  "athanSound": "صوت الأذان",
+  "selectAthan": "اختر صوت الأذان",
+  "prePrayerAlert": "تنبيه قبل الصلاة",
+  "selectReminder": "اختر مدة التنبيه",
+  "minutes": "دقائق",
+  "sunriseAlert": "تنبيه الشروق",
+  "enabled": "مفعل",
+  "disabled": "معطل",
+  "off": "إيقاف",
+  "calculationMethodsHeader": "إعدادات الحساب",
+  "notificationsHeader": "إعدادات التنبيهات",
+  "prayerSchedule": "جدول الصلوات"
 }

@@ -38,6 +38,7 @@ class HiveStorage {
 
   // ── Settings ──────────────────────────────────────────
   bool get isFirstLaunch => !settingsBox.containsKey('intention');
+  bool get hasConfirmedIntention => settingsBox.get('has_confirmed_intention', defaultValue: false);
 
   String getLanguage() => settingsBox.get('language', defaultValue: 'ar');
   Future<void> setLanguage(String lang) => settingsBox.put('language', lang);
@@ -138,13 +139,22 @@ class HiveStorage {
     await bookmarksBox.put('ayah_bookmarks_$surahNumber', bookmarks.toList());
   }
   
-  // ── Hijri Tracking ────────────────────────────────────
-  int getLastHijriMonth() =>
-      settingsBox.get('lastHijriMonth', defaultValue: -1);
+  // REMOVED: Hijri months are no longer tracked for reset purposes.
 
-  Future<void> setLastHijriMonth(int month) =>
-      settingsBox.put('lastHijriMonth', month);
+  // --- Prayer Settings ---
+  int getPrayerCalculationMethod() => 
+      settingsBox.get('prayerCalcMethod', defaultValue: 3); // 3 = Muslim World League
 
+  Future<void> setPrayerCalculationMethod(int index) => 
+      settingsBox.put('prayerCalcMethod', index);
+
+  int getPrayerMadhab() => 
+      settingsBox.get('prayerMadhab', defaultValue: 1); // 1 = Shafi (includes Maliki, Hanbali)
+
+  Future<void> setPrayerMadhab(int index) => 
+      settingsBox.put('prayerMadhab', index);
+
+  // --- Hijri reset check (Legacy/Cleanup) ---
   /// Global lifetime ayah total — never reset by monthly Hijri reset
   int getTotalAyahLifeCount() =>
       settingsBox.get('totalAyahsRead', defaultValue: 0);
@@ -386,4 +396,27 @@ class HiveStorage {
   Future<void> setNotificationFrequency(String frequency) async {
     await settingsBox.put('notif_frequency', frequency);
   }
+
+  Future<void> setConfirmedIntention(bool confirmed) async {
+    await settingsBox.put('has_confirmed_intention', confirmed);
+  }
+
+  // --- Prayer Notification Settings ---
+  String getAthanSound() => 
+      settingsBox.get('prayerAthanSound', defaultValue: 'default');
+
+  Future<void> setAthanSound(String sound) => 
+      settingsBox.put('prayerAthanSound', sound);
+
+  int getPrePrayerReminderMinutes() => 
+      settingsBox.get('prayerPreReminder', defaultValue: 0); // 0 = Off
+
+  Future<void> setPrePrayerReminderMinutes(int minutes) => 
+      settingsBox.put('prayerPreReminder', minutes);
+
+  bool isSunriseAlertEnabled() => 
+      settingsBox.get('prayerSunriseAlert', defaultValue: true);
+
+  Future<void> setSunriseAlertEnabled(bool enabled) => 
+      settingsBox.put('prayerSunriseAlert', enabled);
 }

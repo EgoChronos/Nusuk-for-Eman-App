@@ -58,7 +58,7 @@
   },
   "khatmaProgress": "Khatma progress",
   "newKhatma": "New Khatma",
-  "khatmaResetNote": "Reading progress resets at the start of each Hijri month",
+  "khatmaResetNote": "Reading progress is saved and only resets manually for a new Khatma",
   "searchQuranHint": "Search for Surah or Ayah...",
   "noBookmarksYet": "No bookmarks yet",
   "markSurahRead": "Mark entire surah as read",
@@ -104,5 +104,41 @@
     }
   },
   "runSettings": "Run Settings",
-  "runSettingsDesc": "To ensure notifications arrive on time"
+  "runSettingsDesc": "To ensure notifications arrive on time",
+  "troubleshoot": "Troubleshoot & Test",
+  "prayerFajr": "Fajr",
+  "prayerSunrise": "Sunrise",
+  "prayerDhuhr": "Dhuhr",
+  "prayerAsr": "Asr",
+  "prayerMaghrib": "Maghrib",
+  "prayerIsha": "Isha",
+  "nextPrayerLabel": "Next: {name}",
+  "@nextPrayerLabel": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "prayerTimesSettings": "Prayer Times Settings",
+  "calculationMethods": "Calculation Method & Madhab",
+  "locationError": "Location permission denied or service disabled",
+  "locationUnknown": "Location Unknown",
+  "methodMWL": "Muslim World League",
+  "methodEgyptian": "Egyptian General Authority",
+  "methodUmmAlQura": "Umm al-Qura (Makkah)",
+  "madhabShafi": "Shafi, Maliki, Hanbali",
+  "madhabHanafi": "Hanafi",
+  "selectMethod": "Select Calculation Method",
+  "selectMadhab": "Select Madhab",
+  "athanSound": "Athan Sound",
+  "selectAthan": "Select Athan Sound",
+  "prePrayerAlert": "Pre-Prayer Alert",
+  "selectReminder": "Select Reminder Time",
+  "minutes": "minutes",
+  "sunriseAlert": "Sunrise Alert",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "off": "Off",
+  "calculationMethodsHeader": "CALCULATION SETTINGS",
+  "notificationsHeader": "NOTIFICATION SETTINGS",
+  "prayerSchedule": "PRAYER SCHEDULE"
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/sources/hive_storage.dart';
 import '../../core/services/notification_service.dart'; // Import to reschedule
+import '../../core/services/debug_logger.dart';
 import 'permission_setup_screen.dart';
 import 'package:nusuk_for_iman/l10n/app_localizations.dart';
 
@@ -17,12 +18,24 @@ class NotificationSettingsScreen extends ConsumerStatefulWidget {
 
 class _NotificationSettingsScreenState extends ConsumerState<NotificationSettingsScreen> with WidgetsBindingObserver {
   late Map<String, dynamic> _settings;
+  bool _isMiuiRestricted = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _settings = widget.storage.getNotificationSettings();
+    _checkMiuiStatus();
+  }
+
+  Future<void> _checkMiuiStatus() async {
+    final service = NotificationService();
+    final allowed = await service.isBackgroundPopupsAllowed();
+    if (mounted) {
+      setState(() {
+        _isMiuiRestricted = !allowed;
+      });
+    }
   }
 
   @override
@@ -36,6 +49,7 @@ class _NotificationSettingsScreenState extends ConsumerState<NotificationSetting
     if (state == AppLifecycleState.resumed) {
       debugPrint('NotificationSettings: App resumed, re-syncing permissions...');
       _syncPermissions();
+      _checkMiuiStatus();
     }
   }
 
@@ -181,6 +195,32 @@ class _NotificationSettingsScreenState extends ConsumerState<NotificationSetting
                 ),
               ),
               
+            // MIUI Warning Card
+            if (_isMiuiRestricted)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.orange.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.orange.withValues(alpha: 0.3)),
+                  ),
+                  child: ListTile(
+                    leading: const Icon(Icons.warning_amber_rounded, color: Colors.orange),
+                    title: const Text(
+                      'Xiaomi/MIUI fix required', 
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange)
+                    ),
+                    subtitle: const Text(
+                      'Please enable "Display pop-up windows while running in background" in settings.',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    trailing: const Icon(Icons.open_in_new, size: 18, color: Colors.orange),
+                    onTap: () => NotificationService().openMIUISettings(),
+                  ),
+                ),
+              ),
+
                     // New Unified Permission Management Card
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -204,7 +244,75 @@ class _NotificationSettingsScreenState extends ConsumerState<NotificationSetting
                         ),
                       ),
                     ),
-                    const SizedBox(height: 40),
+                  // Detailed Troubleshooting Section
+                  const SizedBox(height: 24),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      l10n.troubleshoot, // Make sure this key exists or use hardcoded string if testing
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.bug_report_outlined, color: Colors.orange),
+                    title: const Text('Test Notification'),
+                    subtitle: const Text('Sends an immediate standard notification'),
+                    onTap: () async {
+                      await NotificationService().testNotification();
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Notification sent! Check tray.')),
+                        );
+                      }
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.timer_outlined, color: Colors.blueGrey),
+                    title: const Text('Test Delayed Notification'),
+                    subtitle: const Text('Sends a standard notification in 20s (Close App now)'),
+                    onTap: () async {
+                      await NotificationService().testDelayedNotification();
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Delayed notification scheduled! Close the app immediately.')),
+                        );
+                      }
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.layers_outlined, color: Colors.purple),
+                    title: const Text('Test Floating Overlay'),
+                    subtitle: const Text('Schedules overlay in 20 seconds (Close App now)'),
+                    onTap: () async {
+                      await NotificationService().testFloatingOverlay();
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Overlay scheduled! Close the app immediately.')),
+                        );
+                      }
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.share, color: Colors.teal),
+                    title: const Text('Share Debug Logs'),
+                    subtitle: const Text('Export logs to share with developer'),
+                    onTap: () async {
+                      await DebugLogger.shareLogs();
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.security_outlined, color: Colors.blue),
+                    title: const Text('Xiaomi: Open Other Permissions'),
+                    subtitle: const Text('Manual way to enable "Background Pop-ups"'),
+                    onTap: () async {
+                      await NotificationService().openMIUISettings();
+                    },
+                  ),
+                  const SizedBox(height: 40),
           ],
         ],
       ),

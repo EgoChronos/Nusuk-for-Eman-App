@@ -16,6 +16,7 @@ import 'features/dhikr/dhikr_screen.dart';
 import 'features/hadith/hadith_screen.dart';
 import 'features/duaa/duaa_screen.dart';
 import 'features/settings/settings_screen.dart';
+import 'features/prayer/screens/prayer_times_screen.dart';
 import 'core/providers.dart';
 import 'core/services/permission_service.dart';
 
@@ -63,6 +64,7 @@ class NusukApp extends ConsumerWidget {
             (context as Element).markNeedsBuild();
           },
         ),
+        '/prayer_times': (context) => const PrayerTimesScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/quran/read') {

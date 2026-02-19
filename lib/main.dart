@@ -7,20 +7,31 @@ import 'app.dart';
 
 import 'features/floating_content/overlay_screen.dart';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'core/services/debug_logger.dart';
 
 // Overlay Entry Point
 @pragma("vm:entry-point")
-void overlayMain() {
-  debugPrint('OVERLAY ISOLATE: overlayMain starting...');
-  WidgetsFlutterBinding.ensureInitialized();
-  debugPrint('OVERLAY ISOLATE: Bindings initialized.');
-  runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: OverlayScreen(),
-    ),
-  );
-  debugPrint('OVERLAY ISOLATE: runApp called.');
+void overlayMain() async {
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    await DebugLogger.init(); // Initialize logger in UI Isolate
+    DebugLogger.log('OVERLAY ISOLATE: overlayMain starting...');
+    
+    runApp(
+      const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: OverlayScreen(),
+      ),
+    );
+    DebugLogger.log('OVERLAY ISOLATE: runApp called successfully.');
+  } catch (e, stack) {
+    // If we have a logger, use it. Otherwise, debugPrint.
+    try {
+      DebugLogger.log('OVERLAY ISOLATE: CRITICAL CRASH in overlayMain: $e\n$stack');
+    } catch (_) {
+      debugPrint('OVERLAY ISOLATE: CRITICAL CRASH (Logger failed): $e');
+    }
+  }
 }
 
 // ... imports
@@ -34,6 +45,9 @@ void main() async {
 
   // Initialize Alarm Manager (Fast enough to keep here, or move if needed)
   await AndroidAlarmManager.initialize();
+
+  // Initialize Logger
+  await DebugLogger.init();
 
   // App running with minimal blocking
   runApp(

@@ -30,7 +30,12 @@ class IntentionNotifier extends StateNotifier<IntentionType> {
     _settingsBox.put('intention', type.name);
   }
 
+  Future<void> confirmIntention() async {
+    await _settingsBox.put('has_confirmed_intention', true);
+  }
+
   bool get isFirstLaunch => !_settingsBox.containsKey('intention');
+  bool get hasConfirmedIntention => _settingsBox.get('has_confirmed_intention', defaultValue: false);
 
   String getDedicationText({bool arabic = true}) {
     switch (state) {
